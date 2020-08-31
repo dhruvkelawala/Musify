@@ -1,4 +1,5 @@
 import 'package:Musify_v3/models/song.dart';
+import 'package:Musify_v3/screens/player.dart';
 import 'package:Musify_v3/services/api.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
@@ -6,14 +7,21 @@ import "package:flutter/material.dart";
 import "package:flappy_search_bar/flappy_search_bar.dart";
 import 'package:shimmer/shimmer.dart';
 
+import 'bottomPlayer.dart';
 import 'top_songs.dart';
 
-class MusifySearch extends StatelessWidget {
+class MusifySearch extends StatefulWidget {
   static final route = '/musify-search';
 
   @override
+  _MusifySearchState createState() => _MusifySearchState();
+}
+
+class _MusifySearchState extends State<MusifySearch> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomPlayer(),
       body: SafeArea(
         child: SearchBar(
           searchBarPadding:
@@ -70,22 +78,8 @@ class MusifySearch extends StatelessWidget {
   Widget buildItemTile(Song song) {
     return Container(
       child: ListTile(
-        // leading: Container(
-        //   child: CachedNetworkImage(
-        //       imageUrl: song.image,
-        //       placeholder: (ctx, image) {
-        //         return Shimmer.fromColors(
-        //           baseColor: Colors.black,
-        //           highlightColor: Colors.grey[800],
-        //           child: ClipRRect(
-        //             borderRadius: BorderRadius.circular(15),
-        //             child: Container(
-        //               color: Colors.black,
-        //             ),
-        //           ),
-        //         );
-        //       }),
-        // ),
+        onTap: () { Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => PlayerScreen(song.id)));},
         leading: Image(
           image: CachedNetworkImageProvider(
            song.image
@@ -101,7 +95,7 @@ class MusifySearch extends StatelessWidget {
           ),
         ),
         subtitle: Container(
-          child: Text(song.artist),
+          child: Text(song.subtitle),
         ),
       ),
     );

@@ -1,20 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import './themes/theme.dart';
 import './screens/home.dart';
+import 'providers/player_provider.dart';
 import 'widgets/musify_search.dart';
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Musify-V3",
-      theme: appTheme,
-      routes: {
-        // Home.route: (ctx) => Home(),
-        MusifySearch.route: (ctx) => MusifySearch(),
-      },
-      initialRoute: MusifySearch.route,
-      debugShowCheckedModeBanner: false,
+    return ChangeNotifierProvider(
+      create: (_) => PlayerProvider(),
+      child: MaterialApp(
+        title: "Musify-V3",
+        theme: appTheme,
+        routes: {
+          // Home.route: (ctx) => Home(),
+          MusifySearch.route: (ctx) => MusifySearch(),
+        },
+        initialRoute: MusifySearch.route,
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
+
+// MaterialApp(
+//       title: "Musify-V3",
+//       theme: appTheme,
+//       routes: {
+//         // Home.route: (ctx) => Home(),
+//         MusifySearch.route: (ctx) => MusifySearch(),
+//       },
+//       initialRoute: MusifySearch.route,
+//       debugShowCheckedModeBanner: false,
+//     )

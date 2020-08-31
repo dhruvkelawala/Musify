@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:Musify_v3/models/songDetails.dart';
+
 import '../models/song.dart';
 import 'package:Musify_v3/models/song.dart';
 import "package:dio/dio.dart";
@@ -37,4 +39,17 @@ Future<List> searchSong(String query) async {
   print(data["songs"]["data"]);
 
   return data["songs"]['data'].map((song) => Song.fromJSON(song)).toList();
+}
+
+Future<SongDetails> fetchSongDetail(String songId) async {
+  String searchUrl =
+      "/api.php?cc=in&_marker=0%3F_marker%3D0&_format=json&__call=song.getDetails&pids=$songId";
+
+  final Response resp = await dio.get(searchUrl);
+
+  final data = jsonDecode(resp.data);
+
+  print(data[songId]);
+
+  return SongDetails.fromJSON(data[songId]);
 }

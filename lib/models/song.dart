@@ -6,10 +6,8 @@ class Song {
   String subtitle;
   String type;
   String image;
-  String url;
-  String artist;
 
-  Song(this.id, this.title, this.type, this.image, this.url, this.artist);
+  Song(this.id, this.title, this.type, this.image, this.subtitle);
 
   Song.fromJSON(Map<String, dynamic> json) {
     id = json["id"];
@@ -17,7 +15,5 @@ class Song {
     subtitle = fixHtmlChars(json["subtitle"] ?? "");
     type = json["type"];
     image = imageQuality(json["image"]) ?? "";
-    url = json["perma_url"];
-    artist = fixHtmlChars(json["more_info"]["primary_artists"] ?? "");
   }
 }
