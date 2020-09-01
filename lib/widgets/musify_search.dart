@@ -70,9 +70,13 @@ class MusifySearch extends StatelessWidget {
           // Navigator.of(context).push(
           //     MaterialPageRoute(builder: (context) => PlayerScreen(song.id)));
         },
-        leading: Image(
-          image: CachedNetworkImageProvider(song.image),
-          fit: BoxFit.cover,
+        leading: CircleAvatar(
+          backgroundImage: CachedNetworkImageProvider(song.image),
+          radius: 28,
+          // child: Image(
+          //   image: CachedNetworkImageProvider(song.image),
+          //   fit: BoxFit.cover,
+          // ),
         ),
         title: Container(
           child: Text(

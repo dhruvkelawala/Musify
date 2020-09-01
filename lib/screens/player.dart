@@ -23,43 +23,69 @@ class _PlayerScreenState extends State<PlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      extendBodyBehindAppBar: true,
-      body: FutureBuilder(
-        future: fetchSongDetail(widget.songId),
-        initialData: {},
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return snapshot.connectionState == ConnectionState.done
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        extendBodyBehindAppBar: true,
+        body: Obx(() {
+          if (player.currentSong.value == null) {
+            return futureFetchSongDetails();
+          }
+          return widget.songId == player.currentSong.value.id
               ? SingleChildScrollView(
                   child: Column(
                     children: [
-                      songPoster(snapshot.data.image),
-                      songArtists(snapshot.data.artist),
-                      songTitle(snapshot.data.title),
-                      songPlayer(snapshot.data)
+                      songPoster(player.currentSong.value.image),
+                      songArtists(player.currentSong.value.artist),
+                      songTitle(player.currentSong.value.title),
+                      songPlayer(player.currentSong.value)
                     ],
                   ),
                 )
-              : Center(
-                  child: SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: CircularProgressIndicator(
-                      backgroundColor: Theme.of(context).primaryColor,
-                    ),
+              : futureFetchSongDetails();
+        }));
+  }
+
+  Widget futureFetchSongDetails() {
+    return FutureBuilder(
+      future: fetchSongDetail(widget.songId),
+      initialData: {},
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return snapshot.connectionState == ConnectionState.done
+            ? SingleChildScrollView(
+                child: Column(
+                  children: [
+                    songPoster(snapshot.data.image),
+                    songArtists(snapshot.data.artist),
+                    songTitle(snapshot.data.title),
+                    songPlayer(snapshot.data)
+                  ],
+                ),
+              )
+            : Center(
+                child: SizedBox(
+                  height: 30,
+                  width: 30,
+                  child: CircularProgressIndicator(
+                    backgroundColor: Theme.of(context).primaryColor,
                   ),
-                );
-        },
-      ),
+                ),
+              );
+      },
     );
   }
 
   Widget songPlayer(SongDetails song) {
     return Obx(() {
-      player.openAndPlay(song);
+      if (player.currentSong.value != null) {
+        if (song.id != player.currentSong.value.id) {
+          print("Not null");
+          player.openAndPlay(song);
+        }
+      } else {
+        player.openAndPlay(song);
+      }
       print(player.currentSong.value);
 
       final newPlayer = player.player.value;

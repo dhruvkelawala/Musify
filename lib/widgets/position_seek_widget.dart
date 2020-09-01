@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class PositionSeekWidget extends StatefulWidget {
   final Duration currentPosition;
   final Duration duration;
   final Function(Duration) seekTo;
+  final double height;
+  final double textSize;
+  final double thumbSize;
 
   const PositionSeekWidget({
     @required this.currentPosition,
     @required this.duration,
     @required this.seekTo,
+    this.height = 5,
+    this.textSize = 14,
+    this.thumbSize = 5
   });
 
   @override
@@ -39,20 +46,23 @@ class _PositionSeekWidgetState extends State<PositionSeekWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(0.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
+          Container(
             width: 40,
-            child: Text(durationToString(widget.currentPosition)),
+            margin: EdgeInsets.only(left: 20),
+            child: Text(durationToString(widget.currentPosition), style: TextStyle(fontSize: widget.textSize),),
           ),
           Expanded(
             child: SliderTheme(
-              data: SliderThemeData(
-                activeTickMarkColor: Theme.of(context).primaryColor,
+              data: SliderTheme.of(context).copyWith(
                 activeTrackColor: Theme.of(context).primaryColor,
+                inactiveTrackColor: Hexcolor("#212123"),
                 thumbColor: Theme.of(context).primaryColor,
+                trackHeight: widget.height,
+                thumbShape: RoundSliderThumbShape(enabledThumbRadius: widget.thumbSize, elevation: 3)
                 // thumbShape: 
               ),
               child: Slider(
@@ -79,9 +89,10 @@ class _PositionSeekWidgetState extends State<PositionSeekWidget> {
               ),
             ),
           ),
-          SizedBox(
+          Container(
             width: 40,
-            child: Text(durationToString(widget.duration)),
+            margin: EdgeInsets.only(right: 20),
+            child: Text(durationToString(widget.duration), style: TextStyle(fontSize: widget.textSize)),
           ),
         ],
       ),
