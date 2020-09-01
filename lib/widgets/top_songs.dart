@@ -2,7 +2,6 @@ import 'package:Musify_v3/models/song.dart';
 import 'package:Musify_v3/providers/player_provider.dart';
 import 'package:Musify_v3/screens/player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -80,9 +79,8 @@ class TopSongs extends StatelessWidget {
           GestureDetector(
             onTap: () {
               print(song.id);
-              Get.to(PlayerScreen(song.id));
-              // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) => PlayerScreen(song.id)));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => PlayerScreen(song.id)));
             },
             child: Container(
               child: Card(
