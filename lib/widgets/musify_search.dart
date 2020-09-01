@@ -5,27 +5,22 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
 import "package:flutter/material.dart";
 import "package:flappy_search_bar/flappy_search_bar.dart";
+import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'bottomPlayer.dart';
 import 'top_songs.dart';
 
-class MusifySearch extends StatefulWidget {
+class MusifySearch extends StatelessWidget {
   static final route = '/musify-search';
 
-  @override
-  _MusifySearchState createState() => _MusifySearchState();
-}
-
-class _MusifySearchState extends State<MusifySearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomPlayer(),
       body: SafeArea(
         child: SearchBar(
-          searchBarPadding:
-              EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+          searchBarPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
           hintText: "Search",
           hintStyle: TextStyle(fontSize: 17),
           textStyle: TextStyle(color: Colors.white),
@@ -78,12 +73,13 @@ class _MusifySearchState extends State<MusifySearch> {
   Widget buildItemTile(Song song) {
     return Container(
       child: ListTile(
-        onTap: () { Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => PlayerScreen(song.id)));},
+        onTap: () {
+          Get.to(PlayerScreen(song.id));
+          // Navigator.of(context).push(
+          //     MaterialPageRoute(builder: (context) => PlayerScreen(song.id)));
+        },
         leading: Image(
-          image: CachedNetworkImageProvider(
-           song.image
-          ),
+          image: CachedNetworkImageProvider(song.image),
           fit: BoxFit.cover,
         ),
         title: Container(
