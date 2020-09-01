@@ -7,16 +7,14 @@ String key = "38346591";
 
 class PlayerController extends GetxController {
   var player = AssetsAudioPlayer().obs;
-  Rx<SongDetails> currentSong = null.obs;
+  Rx<SongDetails> currentSong = Rx<SongDetails>();
 
   // AssetsAudioPlayer get getPlayer => _player;
 
   // SongDetails get getCurrentSong => _currentSong;
 
   set setCurrentSong(SongDetails song) {
-    currentSong.update((value) {
-      value = song;
-    });
+    currentSong.value = song;
   }
 
   void playTitles(SongDetails song) {
@@ -24,9 +22,7 @@ class PlayerController extends GetxController {
   }
 
   Future<void> openAndPlay(SongDetails song) async {
-    currentSong.update((value) {
-      value = song;
-    });
+    currentSong.value = song;
     final url = await DesPlugin.decrypt(key, song.url);
 
     player.update((newPlayer) {
