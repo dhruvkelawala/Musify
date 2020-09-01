@@ -1,3 +1,4 @@
+import 'package:Musify_v3/controllers/player_controller.dart';
 import 'package:Musify_v3/models/songDetails.dart';
 import 'package:Musify_v3/providers/player_provider.dart';
 import 'package:Musify_v3/services/api.dart';
@@ -5,7 +6,9 @@ import 'package:Musify_v3/widgets/position_seek_widget.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
 class PlayerScreen extends StatefulWidget {
   final String songId;
@@ -15,11 +18,7 @@ class PlayerScreen extends StatefulWidget {
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  // @override
-  // void initState() {
-  //   Provider.of()
-  //   super.initState();
-  // }
+  final PlayerController player = Get.put(PlayerController());
 
   @override
   Widget build(BuildContext context) {
@@ -59,11 +58,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
   }
 
   Widget songPlayer(SongDetails song) {
-    return Consumer<PlayerProvider>(
-        builder: (BuildContext context, PlayerProvider player, _) {
+    return GetBuilder<PlayerController>(builder: (playerController) {
       player.openAndPlay(song);
-      return player.getPlayer.builderRealtimePlayingInfos(
-          builder: (context, infos) {
+
+      final newPlayer = playerController.player.value;
+
+      return newPlayer.builderRealtimePlayingInfos(builder: (context, infos) {
         if (infos == null) {
           return SizedBox();
         }
@@ -75,7 +75,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 currentPosition: infos.currentPosition,
                 duration: infos.duration,
                 seekTo: (to) {
-                  player.getPlayer.seek(to);
+                  newPlayer.seek(to);
                 },
               ),
               Row(
@@ -86,10 +86,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     margin: EdgeInsets.only(right: 30),
                     child: GestureDetector(
                       onTap: () {
-                        player.getPlayer.seekBy(Duration(seconds: -10));
+                        newPlayer.seekBy(Duration(seconds: -10));
                       },
                       onLongPress: () {
-                        player.getPlayer.seek(Duration(minutes: 0, seconds: 0));
+                        newPlayer.seek(Duration(minutes: 0, seconds: 0));
                       },
                       child: Icon(
                         Icons.fast_rewind,
@@ -97,12 +97,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       ),
                     ),
                   ),
-                  playButton(player),
+                  playButton(newPlayer),
                   Container(
                     margin: EdgeInsets.only(left: 30),
                     child: GestureDetector(
                       onTap: () {
-                        player.getPlayer.seekBy(Duration(seconds: 10));
+                        newPlayer.seekBy(Duration(seconds: 10));
                       },
                       child: Icon(
                         Icons.fast_forward,
@@ -119,12 +119,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
     });
   }
 
-  Widget playButton(PlayerProvider player) {
-    return player.getPlayer.builderIsPlaying(builder: (ctx, isPlaying) {
+  Widget playButton(AssetsAudioPlayer player) {
+    return player.builderIsPlaying(builder: (ctx, isPlaying) {
       return Container(
         child: GestureDetector(
           onTap: () {
-            player.getPlayer.playOrPause();
+            player.playOrPause();
           },
           child: Icon(
             isPlaying ? Icons.pause : Icons.play_arrow,

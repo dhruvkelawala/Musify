@@ -1,29 +1,28 @@
+import 'package:Musify_v3/controllers/player_controller.dart';
 import 'package:Musify_v3/models/songDetails.dart';
 import 'package:Musify_v3/providers/player_provider.dart';
 import 'package:Musify_v3/widgets/position_seek_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 
-class BottomPlayer extends StatefulWidget {
-  @override
-  _BottomPlayerState createState() => _BottomPlayerState();
-}
+class BottomPlayer extends StatelessWidget {
+  final PlayerController player = Get.put(PlayerController());
 
-class _BottomPlayerState extends State<BottomPlayer> {
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (ctx) {
-      final player = Provider.of<PlayerProvider>(context);
+    return GetBuilder<PlayerController>(builder: (playerController) {
+      final currentSong = playerController.currentSong.value;
 
-      print(player.getCurrentSong);
-      if (player.getCurrentSong == null) {
+      print(currentSong);
+      if (currentSong == null) {
         return SizedBox(height: 0);
       }
 
-      final SongDetails song = player.getCurrentSong;
+      final SongDetails song = currentSong;
 
       return Container(
         height: 80,
@@ -48,7 +47,7 @@ class _BottomPlayerState extends State<BottomPlayer> {
                 child: Text(
                   song.artist,
                   style: TextStyle(
-                    color: Theme.of(ctx).primaryColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
               ),
