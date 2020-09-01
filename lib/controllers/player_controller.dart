@@ -24,20 +24,17 @@ class PlayerController extends GetxController {
   Future<void> openAndPlay(SongDetails song) async {
     currentSong.value = song;
     final url = await DesPlugin.decrypt(key, song.url);
-
-    player.update((newPlayer) {
-      newPlayer.open(
-          Audio.network(url,
-              metas: Metas(
-                  artist: song.artist,
-                  title: song.title,
-                  image: MetasImage.network(song.image))),
-          showNotification: true,
-          autoStart: true,
-          notificationSettings: NotificationSettings(
-            nextEnabled: false,
-            prevEnabled: false,
-          ));
-    });
+    player.value.open(
+        Audio.network(url,
+            metas: Metas(
+                artist: song.artist,
+                title: song.title,
+                image: MetasImage.network(song.image))),
+        showNotification: true,
+        autoStart: true,
+        notificationSettings: NotificationSettings(
+          nextEnabled: false,
+          prevEnabled: false,
+        ));
   }
 }
