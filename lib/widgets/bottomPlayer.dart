@@ -14,8 +14,8 @@ class BottomPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PlayerController>(builder: (playerController) {
-      final currentSong = playerController.currentSong.value;
+    return Obx(() {
+      final currentSong = player.currentSong.value;
 
       print(currentSong);
       if (currentSong == null) {

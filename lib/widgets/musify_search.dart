@@ -41,15 +41,7 @@ class MusifySearch extends StatelessWidget {
           },
           cancellationWidget: Icon(Icons.cancel),
           placeHolder: buildPlaceholder(),
-          loader: Center(
-            child: SizedBox(
-              width: 30,
-              height: 30,
-              child: CircularProgressIndicator(
-                backgroundColor: Theme.of(context).primaryColor,
-              ),
-            ),
-          ),
+          loader: SearchLoader(),
         ),
       ),
     );
@@ -92,6 +84,25 @@ class MusifySearch extends StatelessWidget {
         ),
         subtitle: Container(
           child: Text(song.subtitle),
+        ),
+      ),
+    );
+  }
+}
+
+class SearchLoader extends StatelessWidget {
+  const SearchLoader({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: 30,
+        height: 30,
+        child: CircularProgressIndicator(
+          backgroundColor: Theme.of(context).primaryColor,
         ),
       ),
     );
