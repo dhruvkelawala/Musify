@@ -18,7 +18,7 @@ class PlayerScreen extends StatefulWidget {
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  final PlayerController player = Get.put(PlayerController());
+  final PlayerController player = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +58,11 @@ class _PlayerScreenState extends State<PlayerScreen> {
   }
 
   Widget songPlayer(SongDetails song) {
-    return GetBuilder<PlayerController>(builder: (playerController) {
+    return Obx(() {
       player.openAndPlay(song);
+      print(player.currentSong.value);
 
-      final newPlayer = playerController.player.value;
+      final newPlayer = player.player.value;
 
       return newPlayer.builderRealtimePlayingInfos(builder: (context, infos) {
         if (infos == null) {
