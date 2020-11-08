@@ -197,9 +197,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
     return ShaderMask(
       shaderCallback: (rect) {
         return LinearGradient(
+          colors: [Colors.black, Colors.transparent],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Colors.black, Colors.transparent],
         ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
       },
       blendMode: BlendMode.dstIn,
