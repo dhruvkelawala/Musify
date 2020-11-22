@@ -18,9 +18,29 @@ class MusifySearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomPlayer(),
+      // appBar: PreferredSize(
+      //   preferredSize:
+      //       Size.fromHeight(90 + MediaQuery.of(context).viewPadding.top),
+      //   child: Container(
+      //     margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.035),
+      //     color: Theme.of(context).backgroundColor,
+      //     child: Row(
+      //       // padding: EdgeInsets.only(left: 10),
+      //       mainAxisAlignment: MainAxisAlignment.start,
+      //       children: [Image.asset('assets/FG.png', height: 70)],
+      //     ),
+      //   ),
+      // ),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).backgroundColor,
+        elevation: 0,
+        leading: Image.asset('assets/FG.png', height: 70),
+        title: Text("Musify", style: TextStyle(fontSize: 32),),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: SearchBar(
-          searchBarPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+          searchBarPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           hintText: "Search",
           hintStyle: TextStyle(fontSize: 17),
           textStyle: TextStyle(color: Colors.white),

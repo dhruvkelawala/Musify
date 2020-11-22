@@ -7,7 +7,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:provider/provider.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 
 class BottomPlayer extends StatelessWidget {
@@ -31,7 +30,7 @@ class BottomPlayer extends StatelessWidget {
         },
         child: Container(
           height: 120,
-          color: Hexcolor("#181924"),
+          color: HexColor("#181924"),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

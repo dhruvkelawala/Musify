@@ -59,7 +59,7 @@ class _PositionSeekWidgetState extends State<PositionSeekWidget> {
             child: SliderTheme(
               data: SliderTheme.of(context).copyWith(
                 activeTrackColor: Theme.of(context).primaryColor,
-                inactiveTrackColor: Hexcolor("#212123"),
+                inactiveTrackColor: HexColor("#212123"),
                 thumbColor: Theme.of(context).primaryColor,
                 trackHeight: widget.height,
                 thumbShape: RoundSliderThumbShape(enabledThumbRadius: widget.thumbSize, elevation: 3)

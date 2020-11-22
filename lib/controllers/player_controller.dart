@@ -31,10 +31,11 @@ class PlayerController extends GetxController {
                 title: song.title,
                 image: MetasImage.network(song.image))),
         showNotification: true,
-        autoStart: true,
+        autoStart: false,
         notificationSettings: NotificationSettings(
           nextEnabled: false,
           prevEnabled: false,
+
         ));
   }
 }

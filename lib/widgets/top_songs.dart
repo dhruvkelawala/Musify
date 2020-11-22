@@ -3,7 +3,6 @@ import 'package:Musify_v3/providers/player_provider.dart';
 import 'package:Musify_v3/screens/player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../services/api.dart';

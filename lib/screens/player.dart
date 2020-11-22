@@ -1,14 +1,13 @@
 import 'package:Musify_v3/controllers/player_controller.dart';
 import 'package:Musify_v3/models/songDetails.dart';
-import 'package:Musify_v3/providers/player_provider.dart';
 import 'package:Musify_v3/services/api.dart';
 import 'package:Musify_v3/widgets/position_seek_widget.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
+
+import '../widgets/download_button.dart';
 
 class PlayerScreen extends StatefulWidget {
   final String songId;
@@ -33,15 +32,13 @@ class _PlayerScreenState extends State<PlayerScreen> {
             return futureFetchSongDetails();
           }
           return widget.songId == player.currentSong.value.id
-              ? SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      songPoster(player.currentSong.value.image),
-                      songArtists(player.currentSong.value.artist),
-                      songTitle(player.currentSong.value.title),
-                      songPlayer(player.currentSong.value)
-                    ],
-                  ),
+              ? Column(
+                  children: [
+                    songPoster(player.currentSong.value.image),
+                    songArtists(player.currentSong.value.artist),
+                    songTitle(player.currentSong.value.title),
+                    songPlayer(player.currentSong.value)
+                  ],
                 )
               : futureFetchSongDetails();
         }));
@@ -95,7 +92,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
           return SizedBox();
         }
         return Container(
-          margin: EdgeInsets.only(top: 60),
+          margin:
+              EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.055),
           child: Column(
             children: [
               PositionSeekWidget(
@@ -106,37 +104,22 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 },
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  DownloadButton(song),
                   Container(
-                    margin: EdgeInsets.only(right: 30),
-                    child: GestureDetector(
-                      onTap: () {
-                        newPlayer.seekBy(Duration(seconds: -10));
-                      },
-                      onLongPress: () {
-                        newPlayer.seek(Duration(minutes: 0, seconds: 0));
-                      },
-                      child: Icon(
-                        Icons.fast_rewind,
-                        size: 40,
-                      ),
+                    margin: EdgeInsets.only(left: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        fastRewindButton(newPlayer),
+                        playButton(newPlayer),
+                        fastForwardButton(newPlayer),
+                      ],
                     ),
-                  ),
-                  playButton(newPlayer),
-                  Container(
-                    margin: EdgeInsets.only(left: 30),
-                    child: GestureDetector(
-                      onTap: () {
-                        newPlayer.seekBy(Duration(seconds: 10));
-                      },
-                      child: Icon(
-                        Icons.fast_forward,
-                        size: 40,
-                      ),
-                    ),
-                  ),
+                  )
                 ],
               )
             ],
@@ -144,6 +127,39 @@ class _PlayerScreenState extends State<PlayerScreen> {
         );
       });
     });
+  }
+
+  Container fastForwardButton(AssetsAudioPlayer newPlayer) {
+    return Container(
+      margin: EdgeInsets.only(left: 15),
+      child: GestureDetector(
+        onTap: () {
+          newPlayer.seekBy(Duration(seconds: 10));
+        },
+        child: Icon(
+          Icons.fast_forward,
+          size: 40,
+        ),
+      ),
+    );
+  }
+
+  Container fastRewindButton(AssetsAudioPlayer newPlayer) {
+    return Container(
+      margin: EdgeInsets.only(right: 15),
+      child: GestureDetector(
+        onTap: () {
+          newPlayer.seekBy(Duration(seconds: -10));
+        },
+        onLongPress: () {
+          newPlayer.seek(Duration(minutes: 0, seconds: 0));
+        },
+        child: Icon(
+          Icons.fast_rewind,
+          size: 40,
+        ),
+      ),
+    );
   }
 
   Widget playButton(AssetsAudioPlayer player) {
@@ -204,7 +220,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
       },
       blendMode: BlendMode.dstIn,
       child: Container(
-        height: 600,
+        height: MediaQuery.of(context).size.height * 0.65,
         child: CachedNetworkImage(
           imageUrl: image,
           fit: BoxFit.cover,
