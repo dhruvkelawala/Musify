@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import './themes/theme.dart';
 import './screens/home.dart';
-import 'providers/player_provider.dart';
 import 'widgets/musify_search.dart';
+
 
 class MyApp extends StatelessWidget {
   @override
@@ -19,6 +19,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
     );
   }
+
+  
+
 }
 
 // MaterialApp(

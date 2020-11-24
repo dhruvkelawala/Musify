@@ -30,6 +30,7 @@ class PlayerController extends GetxController {
                 artist: song.artist,
                 title: song.title,
                 image: MetasImage.network(song.image))),
+        playInBackground: PlayInBackground.enabled,
         showNotification: true,
         autoStart: false,
         notificationSettings: NotificationSettings(
